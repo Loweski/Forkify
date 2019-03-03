@@ -3,7 +3,7 @@
 // https://www.food2fork.com/api/search
 import Search from './models/Search';
 import * as searchView from './views/searchView';
-import {elements} from './views/base';
+import {elements, renderLoader, clearLoader} from './views/base';
 
 /*Global State of the app
   -Seach object
@@ -24,11 +24,13 @@ const controlSearch = async () => {
     // 3. Prepare UI for results (loading spinner)
     searchView.clearInput();
     searchView.clearResults();
+    renderLoader(elements.searchResults);
 
     // 4. Search for recipes
     await state.search.getResults();
 
     // 5. Render results on UI (only after we get results)
+    clearLoader();
     searchView.renderResults(state.search.result);
   }
 }
